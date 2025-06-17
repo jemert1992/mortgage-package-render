@@ -1,0 +1,19 @@
+# Render Configuration for Maximum OCR Mortgage Analyzer
+
+services:
+  - type: web
+    name: mortgage-analyzer-max
+    env: python
+    plan: free
+    buildCommand: "./build.sh && pip install -r requirements.txt"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT app:app --workers 2 --timeout 300"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: TESSDATA_PREFIX
+        value: /usr/share/tesseract-ocr/5/tessdata/
+
